@@ -1,0 +1,30 @@
+{
+    "levels": [
+        {
+            "levelNumber": 1,
+            "waves": [
+                {
+                    "text": "aaaaaassssssddddddffffffjjjjjjkkkkkkllllllöööööö",
+                    "zombies": { "normal": 1 }
+                },
+                {
+                    "text": "asdsdfdfjfjkjklklöasdfjklöasdfjklöasdfjklö",
+                    "zombies": { "normal": 10 }
+                }
+            ]
+        },
+        {
+            "levelNumber": 2,
+            "waves": [
+                {
+                    "text": "some text",
+                    "zombies": { "normal": 5, "tank": 1 }
+                },
+                {
+                    "text": "another text",
+                    "zombies": { "normal": 10 }
+                }
+            ]
+        }
+    ]
+}
