@@ -25,19 +25,23 @@ export class Zombie extends Phaser.Physics.Arcade.Sprite {
         this.scene.add.existing(this).setScale(2);
         this.body?.setSize(32, 32);
         this.body?.setOffset(30, 25);
+        this.setBounce(0);
         this.scene.physics.add.collider(this, (this.scene as Game).ground);
         this.setVelocityX(-velocity);
         this.play("walk");
     }
 
     takeDamage(damage: number) {
-        this.play("hurt").once("animationcomplete", () => {
-            this.play("walk");
-        });
         this.healthPoints -= damage;
         if (this.healthPoints <= 0) {
-            this.setActive(false);
-            this.setVisible(false);
+            this.setSize(32, 1);
+            this.play("die").once("animationcomplete", () => {
+                this.destroy();
+            });
+        } else {
+            this.play("hurt").once("animationcomplete", () => {
+                this.play("walk");
+            });
         }
     }
 
@@ -50,8 +54,6 @@ export class Zombie extends Phaser.Physics.Arcade.Sprite {
     }
 
     destroy() {
-        //this.setActive(false);
-        //this.setVisible(false);
         super.destroy();
     }
 }

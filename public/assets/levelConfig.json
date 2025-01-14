@@ -4,14 +4,15 @@
             "levelNumber": 1,
             "waves": [
                 {
-                    "text": "aaaaaassssssddddddffffffjjjjjjkkkkkkllllllöööööö",
+                    "text": "aaaaaassssssddddddffffffjjjjjjkkkkkkllllllööööööaaaaaaaaaaaaasdfffffffffffffjkkkkkkkkkkkkkkkkkkkkkkkkkkjjjjjjjjjjjjjjjjjjllllllllllllllmmmmmmmmmmnnnnnnnn",
                     "zombies": { "normal": 1 }
                 },
                 {
                     "text": "asdsdfdfjfjkjklklöasdfjklöasdfjklöasdfjklö",
                     "zombies": { "normal": 10 }
                 }
-            ]
+            ],
+            "ammunition": 50
         },
         {
             "levelNumber": 2,
