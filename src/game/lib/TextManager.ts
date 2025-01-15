@@ -1,216 +1,232 @@
 export class TextManager {
     scene: Phaser.Scene;
-    currentKey: string;
-    currentKeyIndex: number;
     text: string;
-    textObjects: Phaser.GameObjects.Text[]; // Array of text objects for each character
+    currentKeyIndex: number;
+    textDone: Phaser.GameObjects.Text;
+    textTodo: Phaser.GameObjects.Text;
+    currentKey: string;
+    visibleLength: number;
+    baseX: number; // Starting X position for alignment
+    fontSize: number; // Font size to calculate character width
 
     constructor(scene: Phaser.Scene) {
         this.scene = scene;
-        this.currentKey = "";
         this.currentKeyIndex = 0;
-        this.textObjects = [];
+        this.visibleLength = 20;
+        this.baseX = window.innerWidth / 2 - 300;
+        this.fontSize = 32; // Assuming 32px font size
     }
 
     setText(text: string) {
-        const startX = window.innerWidth / 2 - text.length * 10; // Starting X position
         const startY = window.innerHeight / 3;
+
         this.text = text;
         this.currentKeyIndex = 0;
+        this.currentKey = text[0];
 
-        // Create text objects for each character
-        this.textObjects = text.split("").map((char, index) => {
-            const textObj = this.scene.add.text(
-                startX + index * 20, // Adjust spacing
-                startY,
-                char,
-                {
-                    fontSize: "32px",
-                    color: "#FFFFFF",
-                    backgroundColor: index === 0 ? "#444444" : "", // Highlight first character
-                }
-            );
-            return textObj;
+        // Create textDone and textTodo objects
+        this.textDone = this.scene.add.text(this.baseX, startY, "", {
+            fontSize: `${this.fontSize}px`,
+            color: "#FFFFFF",
         });
 
-        this.currentKey = text[0]; // Set the first key
+        this.textTodo = this.scene.add.text(this.baseX + 200, startY, text, {
+            fontSize: `${this.fontSize}px`,
+            color: "#aaaaaa",
+        });
+
+        this.updateDisplay();
     }
 
     getCurrentKey() {
         return this.currentKey;
     }
 
-    setCurrentKeyToNext(isCorrect: boolean) {
-        if (this.currentKeyIndex < this.text.length) {
-            const currentTextObj = this.textObjects[this.currentKeyIndex];
-            currentTextObj.setColor(isCorrect ? "#FFFFFF" : "#FF0000"); // White if correct, red if wrong
-            currentTextObj.setBackgroundColor(""); // Remove background color
+    updateDisplay() {
+        // Get the parts of the text to display
+        const doneStart = Math.max(
+            0,
+            this.currentKeyIndex - this.visibleLength
+        );
+        const doneText = this.text.substring(doneStart, this.currentKeyIndex);
 
-            this.currentKeyIndex++;
-            if (this.currentKeyIndex < this.text.length) {
-                this.currentKey = this.text[this.currentKeyIndex];
-                this.updateCurrentKeyStyle();
+        const todoText = this.text.substring(
+            this.currentKeyIndex + 1,
+            this.currentKeyIndex + this.visibleLength + 1
+        );
+
+        const currentKeyChar = this.text[this.currentKeyIndex];
+
+        // Update the textDone content
+        this.textDone.setText(doneText);
+
+        // Calculate the new position for textDone to ensure alignment
+        const doneTextWidth = this.textDone.width;
+        this.textDone.setX(this.baseX + 200 - doneTextWidth);
+
+        // Update the textTodo content
+        this.textTodo.setText(`[${currentKeyChar}]${todoText}`);
+    }
+
+    setCurrentKeyToNext(isCorrect: boolean) {
+        if (this.currentKeyIndex < this.text.length - 1) {
+            if (isCorrect) {
             }
+            this.currentKeyIndex++;
+            this.currentKey = this.text[this.currentKeyIndex];
+            this.updateDisplay();
         }
     }
 
     setCurrentKeyToPrevious() {
         if (this.currentKeyIndex > 0) {
-            const previousTextObj = this.textObjects[this.currentKeyIndex];
-            previousTextObj.setColor("#FFFFFF"); // Reset color to white
-            previousTextObj.setBackgroundColor(""); // Remove background color
-
             this.currentKeyIndex--;
             this.currentKey = this.text[this.currentKeyIndex];
-            this.updateCurrentKeyStyle();
+            this.updateDisplay();
         }
-    }
-
-    updateCurrentKeyStyle() {
-        const currentTextObj = this.textObjects[this.currentKeyIndex];
-        currentTextObj.setBackgroundColor("#444444"); // Add background color for current key
     }
 
     isTextDone() {
-        if (this.currentKeyIndex == this.text.length) {
-            this.textObjects.forEach((textObj) => textObj.destroy());
-            return true;
-        }
-        return false;
+        return this.currentKeyIndex >= this.text.length;
     }
 }
 
-//chatgpt stuff with buffer length that I want to implement but is currently not working
-// export class TextManager {
-//     scene: Phaser.Scene;
-//     currentKey: string;
-//     currentKeyIndex: number;
-//     text: string;
-//     textObjects: Phaser.GameObjects.Text[]; // Array of text objects for each character
-//     visibleText: string; // Text currently visible in the display window
-//     startIndex: number; // Start index of the visible text
-//     endIndex: number; // End index of the visible text
-//     visibleLength: number; // Length of the visible text (e.g., 40 characters)
-//     bufferLength: number; // Buffer characters visible on either side
+export class TextManagerWithChars {
+    scene: Phaser.Scene;
+    text: string;
+    currentKeyIndex: number;
+    textDone: Phaser.GameObjects.Text[];
+    textTodo: Phaser.GameObjects.Text[];
+    currentKey: string;
+    visibleLength: number;
+    baseX: number;
+    fontSize: number;
+    baseY: number;
 
-//     constructor(
-//         scene: Phaser.Scene,
-//         visibleLength: number = 40,
-//         bufferLength: number = 10
-//     ) {
-//         this.scene = scene;
-//         this.currentKey = "";
-//         this.currentKeyIndex = 0;
-//         this.textObjects = [];
-//         this.visibleLength = visibleLength;
-//         this.bufferLength = bufferLength;
-//         this.startIndex = 0;
-//         this.endIndex = visibleLength;
-//     }
+    constructor(scene: Phaser.Scene) {
+        this.scene = scene;
+        this.currentKeyIndex = 0;
+        this.visibleLength = 20;
+        this.baseX = window.innerWidth / 2 - 300;
+        this.fontSize = 32;
+        this.baseY = window.innerHeight / 3;
+    }
 
-//     setText(text: string) {
-//         this.text = text;
-//         this.currentKeyIndex = 0;
-//         this.startIndex = 0;
-//         this.endIndex = this.visibleLength;
-//         this.updateVisibleText();
-//         this.displayText();
-//     }
+    setText(text: string) {
+        this.text = text;
+        this.currentKeyIndex = 0;
+        this.currentKey = text[0];
+        this.textTodo = [];
+        if (!this.textDone) {
+            this.textDone = [];
+        }
+        text.slice(0, 20)
+            .split("")
+            .forEach((char, index) => {
+                const textObj = this.scene.add.text(
+                    this.baseX + 200 + index * 20,
+                    this.baseY,
+                    char,
+                    {
+                        fontSize: `${this.fontSize}px`,
+                        color: "#aaaaaa",
+                    }
+                );
+                this.textTodo.push(textObj);
+            });
+        this.textTodo[0].setBackgroundColor("#444444");
+    }
 
-//     updateVisibleText() {
-//         const bufferStart = Math.max(0, this.startIndex - this.bufferLength);
-//         const bufferEnd = Math.min(
-//             this.text.length,
-//             this.endIndex + this.bufferLength
-//         );
-//         this.visibleText = this.text.slice(bufferStart, bufferEnd);
-//         console.log(this.visibleText);
-//     }
+    setCurrentKeyToNext(isCorrect: boolean) {
+        if (this.currentKeyIndex < this.text.length) {
+            //referenz auf currentchar im texttodo
+            const doneChar = this.textTodo[0];
+            doneChar.setBackgroundColor("");
+            //gib ihn in textdone
+            if (isCorrect) {
+                doneChar.setColor("#ffffff");
+                this.textDone.push(doneChar);
+            } else {
+                doneChar.setColor("#ff0000");
+                this.textDone.push(doneChar);
+            }
+            //schmeiß ihn aus todo raus
+            this.textTodo.splice(0, 1);
+            //wenn größer als
+            if (this.textDone.length >= this.visibleLength) {
+                this.textDone.splice(0, 1);
+                this.textDone[0].destroy();
+            }
+            //füg neuen character aus text zu todo hinzu
+            this.textTodo.push(
+                this.scene.add.text(
+                    this.baseX +
+                        200 +
+                        (this.currentKeyIndex +
+                            this.visibleLength -
+                            this.currentKeyIndex) *
+                            20,
+                    this.baseY,
+                    this.text[this.currentKeyIndex + this.visibleLength],
+                    {
+                        fontSize: `${this.fontSize}px`,
+                        color: "#aaaaaa",
+                    }
+                )
+            );
+            //done eines nach links verschieben
+            this.textDone.forEach((element, index) => {
+                element.setX(
+                    this.baseX + 200 - (this.textDone.length - index) * 20
+                );
+            });
+            //todo eines nach links verschieben
+            this.textTodo.forEach((element, index) => {
+                element.setX(this.baseX + 600 - (20 - index) * 20);
+            });
+            //background auf current key anwenden
+            this.textTodo[0].setBackgroundColor("#444444");
+            this.currentKeyIndex++;
+            this.currentKey = this.text[this.currentKeyIndex];
+        }
+    }
 
-//     displayText() {
-//         // Clear existing text objects
-//         this.textObjects.forEach((obj) => obj.destroy());
-//         this.textObjects = [];
+    setCurrentKeyToPrevious() {
+        if (this.currentKeyIndex > 0) {
+            //get the recent char
+            const charToReturn = this.textDone[this.textDone.length - 1];
+            //remove it from done
+            this.textDone.splice(this.textDone.length - 1, 1);
+            //add it to the todo
+            this.textTodo[0].setBackgroundColor("");
+            this.textTodo.unshift(charToReturn);
+            this.textTodo[0].setColor("#aaaaaa");
+            //remove the last character from todo
+            this.textTodo[this.textTodo.length - 1].destroy();
+            this.textTodo.pop();
+            //move todo one to the right
+            this.textTodo.forEach((element, index) => {
+                element.setX(this.baseX + 200 + (index + 1) * 20);
+            });
+            //move done one to the right
+            this.textDone.forEach((element, index) => {
+                element.setX(
+                    this.baseX + 200 - (this.textDone.length - index - 1) * 20
+                );
+            });
+            //set Background of current key
+            this.textTodo[0].setBackgroundColor("#444444");
+            this.currentKeyIndex--;
+            this.currentKey = this.text[this.currentKeyIndex];
+        }
+    }
 
-//         const startX = window.innerWidth / 2 - (this.visibleLength * 10) / 2; // Center horizontally
-//         const startY = window.innerHeight / 3; // Vertical position
+    getCurrentKey() {
+        return this.currentKey;
+    }
 
-//         // Render the visible text
-//         this.visibleText.split("").forEach((char, index) => {
-//             const textObj = this.scene.add.text(
-//                 startX + index * 20, // Adjust spacing
-//                 startY,
-//                 char,
-//                 {
-//                     fontSize: "32px",
-//                     color: "#FFFFFF",
-//                     backgroundColor:
-//                         index + this.startIndex === this.currentKeyIndex
-//                             ? "#444444"
-//                             : "", // Highlight current character
-//                 }
-//             );
-//             this.textObjects.push(textObj);
-//         });
-
-//         this.currentKey = this.text[this.currentKeyIndex];
-//     }
-
-//     getCurrentKey() {
-//         return this.currentKey;
-//     }
-
-//     setCurrentKeyToNext(isCorrect: boolean) {
-//         if (this.currentKeyIndex < this.text.length) {
-//             const relativeIndex = this.currentKeyIndex - this.startIndex;
-//             const currentTextObj = this.textObjects[relativeIndex];
-//             currentTextObj.setColor(isCorrect ? "#FFFFFF" : "#FF0000"); // White if correct, red if wrong
-//             currentTextObj.setBackgroundColor(""); // Remove background color
-
-//             this.currentKeyIndex++;
-
-//             if (this.currentKeyIndex <= this.endIndex) {
-//                 this.startIndex++;
-//                 this.endIndex++;
-//                 this.updateVisibleText();
-//                 this.displayText();
-//             } else {
-//                 this.updateCurrentKeyStyle();
-//             }
-//         }
-//     }
-
-//     setCurrentKeyToPrevious() {
-//         if (this.currentKeyIndex > 0) {
-//             const relativeIndex = this.currentKeyIndex - this.startIndex;
-//             const previousTextObj = this.textObjects[relativeIndex];
-//             previousTextObj.setColor("#FFFFFF"); // Reset color to white
-//             previousTextObj.setBackgroundColor(""); // Remove background color
-
-//             this.currentKeyIndex--;
-
-//             if (this.currentKeyIndex < this.startIndex) {
-//                 this.startIndex--;
-//                 this.endIndex--;
-//                 this.updateVisibleText();
-//                 this.displayText();
-//             } else {
-//                 this.updateCurrentKeyStyle();
-//             }
-//         }
-//     }
-
-//     updateCurrentKeyStyle() {
-//         const relativeIndex = this.currentKeyIndex - this.startIndex;
-//         const currentTextObj = this.textObjects[relativeIndex];
-//         currentTextObj.setBackgroundColor("#444444"); // Add background color for current key
-//     }
-
-//     isTextDone() {
-//         if (this.currentKeyIndex === this.text.length) {
-//             this.textObjects.forEach((textObj) => textObj.destroy());
-//             return true;
-//         }
-//         return false;
-//     }
-// }
+    isTextDone() {
+        console.log(this.currentKeyIndex + " " + this.text.length);
+        return this.currentKeyIndex >= this.text.length;
+    }
+}

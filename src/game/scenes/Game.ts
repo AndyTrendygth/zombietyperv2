@@ -1,7 +1,7 @@
 import { Scene } from "phaser";
 import { EventBus } from "../EventBus";
 import { ZombieManager } from "../lib/ZombieManager";
-import { TextManager } from "../lib/TextManager";
+import { TextManager, TextManagerWithChars } from "../lib/TextManager";
 import { Fortress } from "../lib/Fortress";
 import { getCookie } from "typescript-cookie";
 
@@ -11,7 +11,8 @@ export class Game extends Scene {
     ground: Phaser.GameObjects.TileSprite;
     zombieManager: ZombieManager;
     levelConfig: any;
-    textManager: TextManager;
+    //textManager: TextManager;
+    textManager: TextManagerWithChars;
     currentWave: number;
     currentLevel: number;
     fortress: Fortress;
@@ -45,7 +46,8 @@ export class Game extends Scene {
 
     create() {
         this.zombieManager = new ZombieManager(this);
-        this.textManager = new TextManager(this);
+        this.textManager = new TextManagerWithChars(this);
+        //this.textManager = new TextManager(this);
         this.fortress = new Fortress(this, 20);
         this.scale.on("resize", this.resizeGame, this);
         this.camera = this.cameras.main;
@@ -187,6 +189,7 @@ export class Game extends Scene {
             this.fortress.shootAndMissZombie();
         }
 
+        console.log(this.textManager.isTextDone());
         if (this.textManager.isTextDone()) {
             this.currentWave++;
             const level = this.levelConfig.levels.find(

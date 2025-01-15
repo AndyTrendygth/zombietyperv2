@@ -75,16 +75,19 @@
     -   [x] die animation
 -   [ ] make one fully functioning level (that makes sense to play)
 -   [x] level survived screen
--   [ ] image of keyboard with layout of which fingers to use for keys (qwertz,qwerty)
 -   [ ] Code zamräumen und sinnvoll abstrahieren, damit Erweiterungen leicht hinzufügbar sind
--   [ ] Intro screen w/level selection
+-   [x] Intro screen w/level selection
+-   [x] fully working text manager
+-   [ ] ammunition management
 
 ## Wished End State of the project
 
--   Am Anfang lande ich in einem Menu Screen wo ich das Spiel starten kann (Story Mode) jos
--   Dann wechselt die Szene in die Game Szene und das Level startet jos
--   der Text den man abtippt ist eine Story (mehr oder weniger ein Tagebuch von dem Character in der Fortress)
--   Es soll begrenzte Munition geben um richtiges abtippen zu belohnen
--   5 Level soll es geben (bestehend aus mehreren Waves)
--   Wenn man stirbt kann man dasselbe Level erneut probieren
--   Wenn man ein Level schafft kann man das nächste Level (den nächsten Tag beginnen) jos
+-   [x] Am Anfang lande ich in einem Menu Screen wo ich das Spiel starten kann (Story Mode)
+-   [x] Dann wechselt die Szene in die Game Szene und das Level startet jos
+-   [ ] der Text den man abtippt ist eine Story (mehr oder weniger ein Tagebuch von dem Character in der Fortress)
+-   [ ] Es soll begrenzte Munition geben um richtiges abtippen zu belohnen
+-   [ ] 5 Level soll es geben (bestehend aus mehreren Waves)
+-   [x] Wenn man stirbt kann man dasselbe Level erneut probieren
+-   [x] Wenn man ein Level schafft kann man das nächste Level (den nächsten Tag beginnen) jos
+-   [ ] Die Level sollen Spaß machen zu spielen indem sie satisfying sind
+-   [ ] es gibt für alle game assets coole grafiken
