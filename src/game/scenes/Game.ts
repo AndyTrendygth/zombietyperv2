@@ -32,10 +32,6 @@ export class Game extends Scene {
             frameWidth: 16,
             frameHeight: 16,
         });
-        this.load.spritesheet("zombie", "zombie.png", {
-            frameWidth: 22,
-            frameHeight: 16,
-        });
         this.load.spritesheet("zombie_keys", "zombie_keys.png", {
             frameWidth: 100,
             frameHeight: 100,
@@ -56,15 +52,12 @@ export class Game extends Scene {
         this.input.keyboard?.on("keydown", this.handleKeyInput, this); // Listen to keystrokes
         this.events.once("fortressDestroyed", this.gameOver, this);
         this.startWave();
-
-        this.physics.world.createDebugGraphic();
-        this.physics.world.setBoundsCollision();
         this.createAnims();
 
-        const menu = this.add.text(100, 100, "Main Menu").setInteractive();
-        menu.on("pointerdown", () => {
-            this.accessMenu();
-        });
+        // const menu = this.add.text(100, 100, "Main Menu").setInteractive();
+        // menu.on("pointerdown", () => {
+        //     this.accessMenu();
+        // });
         EventBus.emit("current-scene-ready", this);
     }
 
@@ -158,7 +151,6 @@ export class Game extends Scene {
 
         this.ground.width = width;
         this.camera.setSize(width, height);
-        //this.textManager.textObjects.setPosition(width / 2, height / 2);
     }
 
     calculateFrameIndex(row: number, column: number, columnsPerRow: number) {
@@ -182,7 +174,12 @@ export class Game extends Scene {
             this.fortress.shootAtZombie();
         } else if (event.key === "Backspace") {
             this.textManager.setCurrentKeyToPrevious();
-        } else if (event.ctrlKey || event.altKey || event.shiftKey) {
+        } else if (
+            event.ctrlKey ||
+            event.altKey ||
+            event.shiftKey ||
+            event.metaKey
+        ) {
         } else {
             this.textManager.setCurrentKeyToNext(false);
             this.fortress.shootAndMissZombie();
