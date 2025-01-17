@@ -109,9 +109,13 @@ export class TextManagerWithChars {
         this.visibleLength = 20;
         this.baseX = window.innerWidth / 2 - 300;
         this.fontSize = 32;
-        this.baseY = window.innerHeight / 3;
+        this.baseY = window.innerHeight / 1.5;
     }
 
+    /**
+     * Setzt den Text welchen der Spieler abtippen soll
+     * @param text Text der abgetippt werden soll
+     */
     setText(text: string) {
         this.text = text;
         this.currentKeyIndex = 0;
@@ -137,6 +141,10 @@ export class TextManagerWithChars {
         this.textTodo[0].setBackgroundColor("#444444");
     }
 
+    /**
+     * Setzt den Fokus sowohl logisch als auch grafisch auf den nächsten Key
+     * @param isCorrect True/False ob der richtige Key gedrückt wurde
+     */
     setCurrentKeyToNext(isCorrect: boolean) {
         if (this.currentKeyIndex < this.text.length) {
             //referenz auf currentchar im texttodo
@@ -157,40 +165,71 @@ export class TextManagerWithChars {
                 this.textDone.splice(0, 1);
                 this.textDone[0].destroy();
             }
-            //füg neuen character aus text zu todo hinzu
-            this.textTodo.push(
-                this.scene.add.text(
-                    this.baseX +
-                        200 +
-                        (this.currentKeyIndex +
-                            this.visibleLength -
-                            this.currentKeyIndex) *
-                            20,
-                    this.baseY,
-                    this.text[this.currentKeyIndex + this.visibleLength],
-                    {
-                        fontSize: `${this.fontSize}px`,
-                        color: "#aaaaaa",
-                    }
-                )
-            );
-            //done eines nach links verschieben
-            this.textDone.forEach((element, index) => {
-                element.setX(
-                    this.baseX + 200 - (this.textDone.length - index) * 20
-                );
-            });
-            //todo eines nach links verschieben
-            this.textTodo.forEach((element, index) => {
-                element.setX(this.baseX + 600 - (20 - index) * 20);
-            });
-            //background auf current key anwenden
-            this.textTodo[0].setBackgroundColor("#444444");
+            this.addCharacterToTextToDo();
+            this.moveTextOneToLeft();
+            this.setBackgroundOnCurrentKey();
             this.currentKeyIndex++;
             this.currentKey = this.text[this.currentKeyIndex];
         }
     }
 
+    /**
+     * Fügt aus dem Gesamttext einen neuen Character zum sichtbaren Todo hinzu.
+     */
+    addCharacterToTextToDo() {
+        this.textTodo.push(
+            this.scene.add.text(
+                this.baseX +
+                    200 +
+                    (this.currentKeyIndex +
+                        this.visibleLength -
+                        this.currentKeyIndex) *
+                        20,
+                this.baseY,
+                this.text[this.currentKeyIndex + this.visibleLength],
+                {
+                    fontSize: `${this.fontSize}px`,
+                    color: "#aaaaaa",
+                }
+            )
+        );
+    }
+
+    /**
+     * Schiebt Text um einen Charakter nach links
+     */
+    moveTextOneToLeft() {
+        //done eines nach links verschieben
+        this.textDone.forEach((element, index) => {
+            element.setX(
+                this.baseX + 200 - (this.textDone.length - index) * 20
+            );
+        });
+        //todo eines nach links verschieben
+        this.textTodo.forEach((element, index) => {
+            element.setX(this.baseX + 600 - (20 - index) * 20);
+        });
+    }
+
+    /**
+     * Schiebt Text um einen Charakter nach rechts
+     */
+    moveTextOneToRight() {
+        //move todo one to the right
+        this.textTodo.forEach((element, index) => {
+            element.setX(this.baseX + 200 + (index + 1) * 20);
+        });
+        //move done one to the right
+        this.textDone.forEach((element, index) => {
+            element.setX(
+                this.baseX + 200 - (this.textDone.length - index - 1) * 20
+            );
+        });
+    }
+
+    /**
+     * Setzt den Fokus sowohl logisch als auch grafisch auf den nächsten Key
+     */
     setCurrentKeyToPrevious() {
         if (this.currentKeyIndex > 0) {
             //get the recent char
@@ -204,29 +243,33 @@ export class TextManagerWithChars {
             //remove the last character from todo
             this.textTodo[this.textTodo.length - 1].destroy();
             this.textTodo.pop();
-            //move todo one to the right
-            this.textTodo.forEach((element, index) => {
-                element.setX(this.baseX + 200 + (index + 1) * 20);
-            });
-            //move done one to the right
-            this.textDone.forEach((element, index) => {
-                element.setX(
-                    this.baseX + 200 - (this.textDone.length - index - 1) * 20
-                );
-            });
-            //set Background of current key
-            this.textTodo[0].setBackgroundColor("#444444");
+            this.moveTextOneToRight;
+            this.setBackgroundOnCurrentKey();
             this.currentKeyIndex--;
             this.currentKey = this.text[this.currentKeyIndex];
         }
     }
 
+    /**
+     * Setzt die Hintergrundfarbe um aktuellen Key hervorzuheben
+     */
+    setBackgroundOnCurrentKey() {
+        this.textTodo[0].setBackgroundColor("#444444");
+    }
+
+    /**
+     *
+     * @returns aktuellen Key im Text
+     */
     getCurrentKey() {
         return this.currentKey;
     }
 
+    /**
+     *
+     * @returns True/False ob der Text fertiggeschrieben wurde.
+     */
     isTextDone() {
-        console.log(this.currentKeyIndex + " " + this.text.length);
         return this.currentKeyIndex >= this.text.length;
     }
 }

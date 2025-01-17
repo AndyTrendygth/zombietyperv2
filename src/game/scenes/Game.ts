@@ -1,7 +1,7 @@
 import { Scene } from "phaser";
 import { EventBus } from "../EventBus";
 import { ZombieManager } from "../lib/ZombieManager";
-import { TextManager, TextManagerWithChars } from "../lib/TextManager";
+import { TextManagerWithChars } from "../lib/TextManager";
 import { Fortress } from "../lib/Fortress";
 import { getCookie } from "typescript-cookie";
 
@@ -10,13 +10,11 @@ export class Game extends Scene {
     background: Phaser.GameObjects.Image;
     ground: Phaser.GameObjects.TileSprite;
     zombieManager: ZombieManager;
-    levelConfig: any;
-    //textManager: TextManager;
     textManager: TextManagerWithChars;
     currentWave: number;
     currentLevel: number;
     fortress: Fortress;
-    ammunition: number;
+    levelData: any;
 
     constructor() {
         super("Game");
@@ -45,18 +43,15 @@ export class Game extends Scene {
     }
 
     create() {
+        this.getLevel(parseInt(getCookie("level") ?? "1"));
         this.zombieManager = new ZombieManager(this);
         this.textManager = new TextManagerWithChars(this);
-        //this.textManager = new TextManager(this);
         this.fortress = new Fortress(this, 20);
+        this.fortress.setAmmuntion(this.levelData.ammunition);
         this.scale.on("resize", this.resizeGame, this);
         this.camera = this.cameras.main;
         this.background = this.add.image(800, 500, "background").setDepth(0);
         this.createGround();
-
-        this.levelConfig = this.cache.json.get("levelConfig");
-        this.currentLevel = parseInt(getCookie("level") ?? "1");
-        this.currentWave = 0;
 
         this.input.keyboard?.on("keydown", this.handleKeyInput, this); // Listen to keystrokes
         this.events.once("fortressDestroyed", this.gameOver, this);
@@ -68,10 +63,17 @@ export class Game extends Scene {
 
         const menu = this.add.text(100, 100, "Main Menu").setInteractive();
         menu.on("pointerdown", () => {
-            console.log("klsd");
             this.accessMenu();
         });
         EventBus.emit("current-scene-ready", this);
+    }
+
+    getLevel(level: number) {
+        const config = this.cache.json.get("levelConfig");
+        this.levelData = config.levels.find(
+            (l: any) => l.levelNumber === level
+        );
+        this.currentWave = 0;
     }
 
     createAnims() {
@@ -164,11 +166,7 @@ export class Game extends Scene {
     }
 
     startWave() {
-        const level = this.levelConfig.levels.find(
-            (l: any) => l.levelNumber === this.currentLevel
-        );
-        this.ammunition = level.ammunition;
-        const wave = level.waves[this.currentWave];
+        const wave = this.levelData.waves[this.currentWave];
         this.textManager.setText(wave.text);
         this.zombieManager.spawnZombies(wave.zombies);
     }
@@ -181,21 +179,17 @@ export class Game extends Scene {
         console.log(this.textManager.getCurrentKey());
         if (event.key === this.textManager.getCurrentKey()) {
             this.textManager.setCurrentKeyToNext(true);
-            this.fortress.shootAtZombie(); // Shoot at zombie
+            this.fortress.shootAtZombie();
         } else if (event.key === "Backspace") {
             this.textManager.setCurrentKeyToPrevious();
+        } else if (event.ctrlKey || event.altKey || event.shiftKey) {
         } else {
             this.textManager.setCurrentKeyToNext(false);
             this.fortress.shootAndMissZombie();
         }
-
-        console.log(this.textManager.isTextDone());
         if (this.textManager.isTextDone()) {
             this.currentWave++;
-            const level = this.levelConfig.levels.find(
-                (l: any) => l.levelNumber === this.currentLevel
-            );
-            if (this.currentWave < level.waves.length) {
+            if (this.currentWave < this.levelData.waves.length) {
                 this.startWave();
             } else {
                 this.levelComplete();

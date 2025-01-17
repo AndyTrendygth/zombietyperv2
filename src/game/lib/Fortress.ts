@@ -8,10 +8,14 @@ export class Fortress {
     fortressObject: Phaser.GameObjects.Sprite;
     healthPoints: number;
     healthPointsText: Phaser.GameObjects.Text;
+    ammunition: number;
+    ammunitionText: Phaser.GameObjects.Text;
+    maxAmmunition: number;
 
     constructor(scene: Phaser.Scene, healthPoints: number) {
         this.scene = scene;
         this.healthPoints = healthPoints;
+        //this.ammunition = ammunition;
         this.bullets = this.scene.physics.add.group({
             classType: Bullet,
             runChildUpdate: true,
@@ -48,9 +52,8 @@ export class Fortress {
     handleBulletZombieCollision(bullet: any, zombie: any) {
         const bulletGameObject = bullet as Bullet;
         const zombieGameObject = zombie as Zombie;
-        bulletGameObject.setActive(false);
-        bulletGameObject.setVisible(false);
         zombieGameObject.takeDamage(1); // Example damage value
+        this.bullets.remove(bulletGameObject, true, true);
     }
 
     handleZombieFortressCollision(zombie: any, fortress: any) {
@@ -71,26 +74,32 @@ export class Fortress {
     }
 
     shootAtZombie() {
-        const bullet = new Bullet(
-            this.scene,
-            100,
-            this.scene.scale.height - 120,
-            900,
-            0
-        );
-        this.bullets.add(bullet);
+        if (this.getAmmunition() > 0) {
+            const bullet = new Bullet(
+                this.scene,
+                100,
+                this.scene.scale.height - 120,
+                900,
+                0
+            );
+            this.bullets.add(bullet);
+            this.reduceAmmunition();
+        }
     }
 
     shootAndMissZombie() {
-        const bullet = new Bullet(
-            this.scene,
-            100,
-            this.scene.scale.height - 150,
-            900,
-            -300
-        );
-        this.bullets.add(bullet);
-        bullet.setRotation(Phaser.Math.DegToRad(-15));
+        if (this.getAmmunition() > 0) {
+            const bullet = new Bullet(
+                this.scene,
+                100,
+                this.scene.scale.height - 150,
+                900,
+                -300
+            );
+            this.bullets.add(bullet);
+            bullet.setRotation(Phaser.Math.DegToRad(-15));
+            this.reduceAmmunition();
+        }
     }
 
     takeDamage() {
@@ -99,6 +108,28 @@ export class Fortress {
         } else {
             this.healthPoints -= 1;
             this.healthPointsText.setText(`HP: ${this.healthPoints}`);
+        }
+    }
+
+    setAmmuntion(ammunition: number) {
+        this.ammunition = ammunition;
+        this.maxAmmunition = ammunition;
+        this.ammunitionText = this.scene.add.text(
+            10,
+            30,
+            `${ammunition}/${this.maxAmmunition} Ammunition`,
+            { fontSize: "20px" }
+        );
+    }
+    getAmmunition() {
+        return this.ammunition;
+    }
+    reduceAmmunition() {
+        if (this.ammunition > 0) {
+            this.ammunition--;
+            this.ammunitionText.setText(
+                `${this.ammunition}/${this.maxAmmunition}`
+            );
         }
     }
 }

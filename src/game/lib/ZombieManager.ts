@@ -17,16 +17,17 @@ export class ZombieManager {
         const tankZombieCount = zombies.tank || 0;
 
         for (let i = 0; i < normalZombieCount; i++) {
-            this.scene.time.delayedCall(1000, () => {
+            setTimeout(() => {
                 console.log("Spawning normal zombie");
-                this.spawnZombie(100, 50);
-            });
+                this.spawnZombie(5, 50);
+            }, 1000 * i);
         }
 
         for (let i = 0; i < tankZombieCount; i++) {
-            this.scene.time.delayedCall(1000, () => {
-                this.spawnZombie(300, 20);
-            });
+            setTimeout(() => {
+                console.log("Spawning normal zombie");
+                this.spawnZombie(10, 20);
+            }, 1000 * i);
         }
     }
 
@@ -38,9 +39,14 @@ export class ZombieManager {
             enemyX,
             enemyY,
             healthPoints,
-            velocity
+            velocity,
+            this
         );
         this.aliveZombies.add(zombie);
+    }
+
+    removeZombie(zombie: Zombie) {
+        this.aliveZombies.remove(zombie, true, true); // Remove zombie from the list
     }
 
     update() {}

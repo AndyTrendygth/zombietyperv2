@@ -1,3 +1,6 @@
+/**
+ * Bullet welche von der Fortress abgefeuert wird.
+ */
 export class Bullet extends Phaser.Physics.Arcade.Sprite {
     velocityx: number;
     velocityy: number;
@@ -16,6 +19,7 @@ export class Bullet extends Phaser.Physics.Arcade.Sprite {
         this.scene.add.existing(this);
         this.setVelocityX(velocityx);
         this.setVelocityY(velocityy);
+        this.setBounce(0, 0);
     }
 
     update() {

@@ -4,28 +4,99 @@
             "levelNumber": 1,
             "waves": [
                 {
-                    "text": "abcdefsn",
-                    "zombies": { "normal": 1 }
+                    "text": "I woke up to silence today, broken only by the distant groans of the undead.",
+                    "zombies": { "normal": 10 }
                 },
                 {
-                    "text": "asdsdfdfjfjkjklklöasdfjklöasdfjklöasdfjklö",
-                    "zombies": { "normal": 10 }
+                    "text": "This fortress I built with my hands might be my only salvation. First entry: Survive.",
+                    "zombies": { "normal": 8 }
                 }
             ],
-            "ammunition": 50
+            "ammunition": 95
         },
         {
             "levelNumber": 2,
             "waves": [
                 {
-                    "text": "some text",
-                    "zombies": { "normal": 5, "tank": 1 }
+                    "text": "The morning brought a grim realization: my supplies are dwindling.",
+                    "zombies": { "normal": 8 }
                 },
                 {
-                    "text": "another text",
+                    "text": "I scavenged through nearby buildings, dodging the ever-lurking undead.",
+                    "zombies": { "normal": 12 }
+                }
+            ],
+            "ammunition": 110
+        },
+        {
+            "levelNumber": 3,
+            "waves": [
+                {
+                    "text": "I found an old photograph of my family today. Their faces are blurry now.",
+                    "zombies": { "normal": 8, "tank": 1 }
+                },
+                {
+                    "text": "The horde grows thicker outside. I miss them more than I thought possible.",
                     "zombies": { "normal": 10 }
                 }
-            ]
+            ],
+            "ammunition": 138
+        },
+        {
+            "levelNumber": 4,
+            "waves": [
+                {
+                    "text": "A stranger appeared at the gates, begging for shelter. I couldn’t take the risk.",
+                    "zombies": { "normal": 12 }
+                },
+                {
+                    "text": "Turning him away broke something inside me. Is humanity more fragile than I imagined?",
+                    "zombies": { "normal": 10, "tank": 1 }
+                }
+            ],
+            "ammunition": 158
+        },
+        {
+            "levelNumber": 5,
+            "waves": [
+                {
+                    "text": "The undead tried to breach the walls today. My ammunition is running low.",
+                    "zombies": { "normal": 8, "tank": 2 }
+                },
+                {
+                    "text": "I’ve started rationing my bullets, aiming for the head. Every wasted shot is a risk.",
+                    "zombies": { "normal": 15 }
+                }
+            ],
+            "ammunition": 195
+        },
+        {
+            "levelNumber": 6,
+            "waves": [
+                {
+                    "text": "There’s a pattern to their behavior—almost as if they’re being guided.",
+                    "zombies": { "normal": 10, "tank": 2 }
+                },
+                {
+                    "text": "A memory surfaced: rumors of experiments, a virus gone wrong. Is this man-made?",
+                    "zombies": { "normal": 12, "tank": 1 }
+                }
+            ],
+            "ammunition": 210
+        },
+        {
+            "levelNumber": 7,
+            "waves": [
+                {
+                    "text": "Today, I’ll write my final entry. My plan is set—fortify the walls, secure ammo.",
+                    "zombies": { "normal": 15, "tank": 2 }
+                },
+                {
+                    "text": "This is not the end. If someone finds this, know I fought to the very last moment.",
+                    "zombies": { "normal": 18, "tank": 1 }
+                }
+            ],
+            "ammunition": 250
         }
     ]
 }
