@@ -31,7 +31,7 @@
     -   [x] die animation
 -   [x] make one fully functioning level (that makes sense to play)
 -   [x] level survived screen
--   [ ] Code zamräumen und sinnvoll abstrahieren, damit Erweiterungen leicht hinzufügbar sind
+-   [x] Code zamräumen und sinnvoll abstrahieren, damit Erweiterungen leicht hinzufügbar sind
 -   [x] Intro screen w/level selection
 -   [x] fully working text manager
 -   [x] ammunition management

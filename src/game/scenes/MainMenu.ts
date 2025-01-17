@@ -6,7 +6,6 @@ export class MainMenu extends Phaser.Scene {
     }
 
     create() {
-        // Add a "Game Over" text
         this.add
             .text(
                 this.scale.width / 2,
