@@ -32,9 +32,13 @@
 -   [x] make one fully functioning level (that makes sense to play)
 -   [x] level survived screen
 -   [x] Code zamräumen und sinnvoll abstrahieren, damit Erweiterungen leicht hinzufügbar sind
--   [x] Intro screen w/level selection
+-   [x] Intro screen
 -   [x] fully working text manager
 -   [x] ammunition management
+-   [ ] fortress texture
+-   [ ] bullet texture
+-   [ ] 2 story pfade (letting a stranger seeking for help in or not)
+-   [ ] deploy to my personal website as subdomain e.g. zombietyper.andyyk.com
 
 ## Wished End State of the project
 
