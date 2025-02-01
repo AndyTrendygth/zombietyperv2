@@ -37,7 +37,6 @@ export class Zombie extends Phaser.Physics.Arcade.Sprite {
 
     takeDamage(damage: number) {
         this.healthPoints -= damage;
-        console.log("hp" + this.healthPoints);
         if (this.healthPoints <= 0) {
             this.setSize(32, 1);
             this.play("die").once("animationcomplete", () => {

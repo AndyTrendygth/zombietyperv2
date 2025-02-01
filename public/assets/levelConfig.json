@@ -4,15 +4,19 @@
             "levelNumber": 1,
             "waves": [
                 {
-                    "text": "I woke up to silence today, broken only by the distant groans of the undead.",
+                    "text": "The failed experiments on immortality research triggered a rain that turns everyone who touches it into zombies.",
                     "zombies": { "normal": 10 }
                 },
                 {
-                    "text": "This fortress I built with my hands might be my only salvation. First entry: Survive.",
+                    "text": "Luckily I was at home today, but my wife and children haven't returned since this morning, hopefully they survived somehow...",
+                    "zombies": { "normal": 8 }
+                },
+                {
+                    "text": "Now I have no choice but to defend myself.",
                     "zombies": { "normal": 8 }
                 }
             ],
-            "ammunition": 95
+            "ammunition": 292
         },
         {
             "levelNumber": 2,
@@ -32,71 +36,84 @@
             "levelNumber": 3,
             "waves": [
                 {
-                    "text": "I found an old photograph of my family today. Their faces are blurry now.",
+                    "text": "Today I checked my supplies. 6 cans of beans, 20 litres of water and 1 chocolate bar.",
                     "zombies": { "normal": 8, "tank": 1 }
                 },
                 {
-                    "text": "The horde grows thicker outside. I miss them more than I thought possible.",
+                    "text": "That should be enough for an entire week, but I need to come up with a plan for next week, the zombies only become more and more...",
                     "zombies": { "normal": 10 }
                 }
             ],
-            "ammunition": 138
+            "ammunition": 226
         },
         {
             "levelNumber": 4,
             "waves": [
                 {
-                    "text": "A stranger appeared at the gates, begging for shelter. I couldn’t take the risk.",
+                    "text": "It feels so weird to be alone in this house, every time I look at the pictures of my family the chances of them surviving becomes lower and lower.",
                     "zombies": { "normal": 12 }
                 },
                 {
-                    "text": "Turning him away broke something inside me. Is humanity more fragile than I imagined?",
+                    "text": "I would want to go out and look for them but it is just to dangerous.",
                     "zombies": { "normal": 10, "tank": 1 }
                 }
             ],
-            "ammunition": 158
+            "ammunition": 225
         },
         {
             "levelNumber": 5,
             "waves": [
                 {
-                    "text": "The undead tried to breach the walls today. My ammunition is running low.",
+                    "text": "Today it was a bit quieter, maybe the zombies understood that I will not let them in by any chance.",
                     "zombies": { "normal": 8, "tank": 2 }
                 },
                 {
-                    "text": "I’ve started rationing my bullets, aiming for the head. Every wasted shot is a risk.",
+                    "text": "Bonk Bonk - Wait what's that? There is someone at my door! What should I do?",
                     "zombies": { "normal": 15 }
                 }
             ],
-            "ammunition": 195
+            "ammunition": 176,
+            "choices": {
+                "text": "Should I answer the door?",
+                "options": [
+                    {
+                        "text": "Open",
+                        "nextLevel": 6
+                    },
+                    {
+                        "text": "Ignore",
+                        "nextLevel": 7
+                    }
+                ]
+            }
         },
         {
             "levelNumber": 6,
             "waves": [
                 {
-                    "text": "There’s a pattern to their behavior—almost as if they’re being guided.",
+                    "text": "It's a dog! Must be one of our neighbors and he looks healthy. I let him in. That must mean animals are immune to the virus.",
                     "zombies": { "normal": 10, "tank": 2 }
                 },
                 {
-                    "text": "A memory surfaced: rumors of experiments, a virus gone wrong. Is this man-made?",
+                    "text": "He will be a good compagnion in this big and lonely house. I'll call him Timmy.",
                     "zombies": { "normal": 12, "tank": 1 }
                 }
             ],
-            "ammunition": 210
+            "ammunition": 213
         },
         {
             "levelNumber": 7,
             "waves": [
                 {
-                    "text": "Today, I’ll write my final entry. My plan is set—fortify the walls, secure ammo.",
+                    "text": "I decided to ignore the knocking, I can't risk my life for a stranger.",
                     "zombies": { "normal": 15, "tank": 2 }
                 },
                 {
-                    "text": "This is not the end. If someone finds this, know I fought to the very last moment.",
+                    "text": "It stopped after a while, I hope whatever it was outside is gone now and won't try to break into my house.",
                     "zombies": { "normal": 18, "tank": 1 }
                 }
             ],
-            "ammunition": 250
+            "ammunition": 184
         }
     ]
 }

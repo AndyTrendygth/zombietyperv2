@@ -40,7 +40,7 @@ export class MainMenu extends Phaser.Scene {
         const selectLevelButton = this.add
             .text(
                 this.scale.width / 2,
-                this.scale.height / 2 + 75,
+                this.scale.height / 2 + 100,
                 "Select a specific level",
                 {
                     fontSize: "32px",

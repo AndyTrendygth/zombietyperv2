@@ -13,6 +13,7 @@ export class Bullet extends Phaser.Physics.Arcade.Sprite {
         velocityy: number
     ) {
         super(scene, x, y, "bullet");
+        this.setOrigin(0, 1);
         this.velocityx = velocityx;
         this.velocityy = velocityy;
         this.scene.physics.world.enable(this);

@@ -21,8 +21,15 @@ export class Fortress {
             runChildUpdate: true,
         });
         this.fortressObject = this.scene.add
-            .sprite(100, this.scene.scale.height - 120, "fortress")
+            .sprite(0, window.innerHeight - 96, "fortress")
+            .setScale(1.5)
+            .setOrigin(0, 1)
             .setDepth(1);
+        this.scene.add
+            .image(150, window.innerHeight - 98, "pistol")
+            .setDepth(1)
+            .setScale(1.5)
+            .setOrigin(0, 1);
         this.scene.physics.add.existing(this.fortressObject, true);
         this.healthPointsText = this.scene.add
             .text(
@@ -114,12 +121,11 @@ export class Fortress {
     setAmmuntion(ammunition: number) {
         this.ammunition = ammunition;
         this.maxAmmunition = ammunition;
-        this.ammunitionText = this.scene.add.text(
-            10,
-            30,
-            `${ammunition}/${this.maxAmmunition} Ammunition`,
-            { fontSize: "20px" }
-        );
+        this.ammunitionText = this.scene.add
+            .text(10, 30, `${ammunition}/${this.maxAmmunition} Ammunition`, {
+                fontSize: "20px",
+            })
+            .setDepth(1);
     }
     getAmmunition() {
         return this.ammunition;

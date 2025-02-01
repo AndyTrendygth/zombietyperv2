@@ -1,27 +1,5 @@
 # Zombietyper
 
-## Levels json
-
-```
-{
-    "levels": [
-        {
-            level:1,
-            waves: [{
-                text: sldkfsjldkfjsöalkdfj,
-                spawnCount: 5,
-                zombies: {normal:5}
-            },{
-                text: söalfkdjaösldkfjsödlfksdjflöskdjflsd,
-                spawnCount: 10,
-                zombies: {normal:9, tank:1}
-            }]
-            ammo: 70
-        }
-    ]
-}
-```
-
 -   [x] make the text styling for the text to type
 -   [x] make game over at 0 hp
 -   [x] only allow the zombie to hit the fortress every second
@@ -35,10 +13,9 @@
 -   [x] Intro screen
 -   [x] fully working text manager
 -   [x] ammunition management
--   [ ] fortress texture
--   [ ] bullet texture
--   [ ] 2 story pfade (letting a stranger seeking for help in or not)
--   [ ] deploy to my personal website as subdomain e.g. zombietyper.andyyk.com
+-   [x] fortress texture
+-   [x] bullet texture
+-   [x] 2 story pfade (letting a stranger seeking for help in or not)
 
 ## Wished End State of the project
 
@@ -49,7 +26,6 @@
 -   [x] 5 Level soll es geben (bestehend aus mehreren Waves)
 -   [x] Wenn man stirbt kann man dasselbe Level erneut probieren
 -   [x] Wenn man ein Level schafft kann man das nächste Level (den nächsten Tag beginnen) jos
--   [ ] Die Level sollen Spaß machen zu spielen indem sie satisfying sind
--   [ ] es gibt für alle game assets coole grafiken
--   [ ] man kann einmal zwischen zwei story pfaden entscheiden und kann dadurch ein anderes ending bekommen
--   [ ] es is deployed
+-   [x] Die Level sollen Spaß machen zu spielen indem sie satisfying sind
+-   [x] es gibt für alle game assets coole grafiken
+-   [x] man kann einmal zwischen zwei story pfaden entscheiden und kann dadurch ein anderes ending bekommen

@@ -23,11 +23,10 @@ export class Game extends Scene {
     preload() {
         this.load.setPath("assets");
         this.load.image("background", "game-bg-night.png");
-        this.load.image("ground", "ground.png");
-        this.load.image("man", "man.png");
         this.load.json("levelConfig", "levelConfig.json");
-        this.load.image("bullet", "bullet.png");
-        this.load.image("fortress", "fortress.png");
+        this.load.image("bullet", "bullet_2.png");
+        this.load.image("fortress", "house_with_fence_7.png");
+        this.load.image("pistol", "pistol.png");
         this.load.spritesheet("textures", "Textures-16.png", {
             frameWidth: 16,
             frameHeight: 16,
@@ -168,7 +167,6 @@ export class Game extends Scene {
     }
 
     handleKeyInput(event: KeyboardEvent) {
-        console.log(this.textManager.getCurrentKey());
         if (event.key === this.textManager.getCurrentKey()) {
             this.textManager.setCurrentKeyToNext(true);
             this.fortress.shootAtZombie();
@@ -189,7 +187,10 @@ export class Game extends Scene {
             if (this.currentWave < this.levelData.waves.length) {
                 this.startWave();
             } else {
-                this.levelComplete();
+                setTimeout(() => {
+                    this.levelComplete();
+                }, 2000);
+                //this.levelComplete();
             }
         }
     }
@@ -201,9 +202,12 @@ export class Game extends Scene {
     }
 
     levelComplete() {
-        this.scene.stop("Game").start("LevelComplete", {
-            level: this.currentLevel,
-        });
+        if (this.zombieManager.aliveZombies.getLength() == 0) {
+            this.scene.stop("Game").start("LevelComplete", {
+                level: this.currentLevel,
+                levelData: this.levelData,
+            });
+        }
     }
 
     accessMenu() {

@@ -18,14 +18,12 @@ export class ZombieManager {
 
         for (let i = 0; i < normalZombieCount; i++) {
             setTimeout(() => {
-                console.log("Spawning normal zombie");
                 this.spawnZombie(5, 50);
             }, 1000 * i);
         }
 
         for (let i = 0; i < tankZombieCount; i++) {
             setTimeout(() => {
-                console.log("Spawning normal zombie");
                 this.spawnZombie(10, 20);
             }, 1000 * i);
         }
